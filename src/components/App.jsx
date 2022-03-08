@@ -3,25 +3,40 @@ import VideoList from './VideoList.js';
 
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '/src/data/exampleVideoData.js';
+import youtubeVideoData from '/src/data/youtubeVideoData.js';
+import searchYouTube from '/src/lib/searchYouTube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // this.searchYouTube = props.searchYouTube;
     this.state = {
-      current: exampleVideoData[0],
       videoList: exampleVideoData,
+      current: exampleVideoData[0],
       currentId: exampleVideoData[0].id.videoId
     };
+  }
+  componentDidMount() {
+
+    searchYouTube('oaf1', (data) => {
+      this.setState({
+        videoList: data,
+        current: data[0],
+        currentId: data[0].id.videoId
+      });
+    });
+
+
   }
 
   onVideoClick (video) {
     this.setState({
-      current: video,
-      currentId: video.id.videoId
+      current: video
     });
   }
 
   render() {
+
     return (
       <div>
         <nav className="navbar">
