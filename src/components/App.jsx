@@ -1,6 +1,5 @@
 import Search from './Search.js';
 import VideoList from './VideoList.js';
-
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '/src/data/exampleVideoData.js';
 import youtubeVideoData from '/src/data/youtubeVideoData.js';
@@ -9,7 +8,6 @@ import searchYouTube from '/src/lib/searchYouTube.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // this.searchYouTube = props.searchYouTube;
     this.state = {
       videoList: exampleVideoData,
       current: exampleVideoData[0],
@@ -17,7 +15,6 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-
     searchYouTube('oaf1', (data) => {
       this.setState({
         videoList: data,
@@ -25,13 +22,23 @@ class App extends React.Component {
         currentId: data[0].id.videoId
       });
     });
-
-
   }
+
 
   onVideoClick (video) {
     this.setState({
-      current: video
+      current: video,
+      currentId: video.id.videoId
+    });
+  }
+
+  userSearch (query) {
+    searchYouTube(query, (data) => {
+      this.setState({
+        videoList: data,
+        current: data[0],
+        currentId: data[0].id.videoId
+      });
     });
   }
 

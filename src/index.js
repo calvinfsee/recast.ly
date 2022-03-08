@@ -3,4 +3,7 @@ import App from './components/App.js';
 import searchYouTube from './lib/searchYouTube.js';
 import youtubeVideoData from './data/youtubeVideoData.js';
 
-ReactDOM.render(<App searchYouTube={searchYouTube.bind(this)} />, document.getElementById('app'));
+// searchYouTube('oaf1', (data) => {
+
+// });
+ReactDOM.render(<App />, document.getElementById('app'));
