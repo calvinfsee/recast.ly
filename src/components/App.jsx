@@ -9,59 +9,64 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videoList: exampleVideoData,
-      current: exampleVideoData[0],
-      currentId: exampleVideoData[0].id.videoId
+      videos: [],
+      video: {}
     };
+    this.searchYouTube = this.props.searchYouTube.bind(this);
   }
+
   componentDidMount() {
-    searchYouTube('oaf1', (data) => {
+    this.searchYouTube('cat', (data) => {
       this.setState({
-        videoList: data,
-        current: data[0],
-        currentId: data[0].id.videoId
+        videos: data,
+        video: data[2]
       });
     });
   }
 
-
-  onVideoClick (video) {
+  onClick (video) {
     this.setState({
-      current: video,
-      currentId: video.id.videoId
+      video: video
     });
   }
 
-  userSearch (query) {
-    searchYouTube(query, (data) => {
+  handleSubmit (query) {
+    this.searchYouTube(query, (data) => {
       this.setState({
-        videoList: data,
-        current: data[0],
-        currentId: data[0].id.videoId
+        videos: data,
+        video: data[0]
       });
     });
   }
 
-  render() {
+  handleChange (query) {
+    this.searchYouTube(query, (data) => {
+      this.setState({
+        videos: data,
+        video: data[0]
+      });
+    });
+  }
 
+  render () {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div><h5><em>search</em></h5></div>
-            <Search />
+            <Search handleChange={this.handleChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)} />
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
             <div><h5><em>videoPlayer</em></h5></div>
             <div>
-              <VideoPlayer video={this.state.current} />
+              { <VideoPlayer video={this.state.video} /> }
             </div>
           </div>
           <div className="col-md-5">
             <div><h5><em>videoList</em></h5></div>
-            <VideoList onClick={this.onVideoClick.bind(this)} currentId={this.state.currentId} videos={this.state.videoList} />
+            <VideoList onClick={this.onClick.bind(this)} videos={this.state.videos} />
           </div>
         </div>
       </div>

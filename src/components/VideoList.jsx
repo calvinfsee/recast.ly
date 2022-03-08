@@ -1,19 +1,13 @@
 import VideoListEntry from './VideoListEntry.js';
 
 var VideoList = (props) => {
-  return (
-
+  return Object.keys(props.videos).length > 0 ? (
     <div className="video-list">
-      {props.videos.map((video) => {
-        if (video.id.videoId === props.currentId) {
-          return;
-        }
-        return <VideoListEntry onClick={props.onClick} key={video.id.videoId} video={video} />;
-      }
-
+      {props.videos.map((video) =>
+        <VideoListEntry onClick={props.onClick} key={video.id.videoId} video={video} />
       )}
     </div>
-  );
+  ) : <div>loading</div>;
 };
 
 // PropTypes tell other developers what `props` a component expects
